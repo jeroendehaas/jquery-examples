@@ -1,0 +1,123 @@
+<!doctype>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <title>Registreer je op onze site</title>
+        <meta charset="utf-8"> 
+	</head>
+	<body>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">Registreer je op onze site</h1>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="username" class="col-xs-4 control-label">Gebruikersnaam</label>
+						<div class="col-xs-8">
+							<input type="email" class="form-control" id="username" placeholder="Jan">
+							<p class="feedback"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-xs-4 control-label">Wachtwoord</label>
+						<div class="col-xs-8">
+							<input type="password" class="form-control" id="password">
+							<p class="feedback"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="confirm-password" class="col-xs-4 control-label">Bevestig wachtwoord</label>
+						<div class="col-xs-8">
+							<input type="password" class="form-control" id="confirm-password">
+							<p class="feedback"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-offset-4 col-xs-8">
+							<input type="submit" class="btn btn-default" disabled="disabled" value="Registreer">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			$(function() {
+				function setMessageFor(input, message, isPositive) {
+					var $p = input.siblings('p.feedback').first();
+					$p.removeClass('text-warning');
+					$p.removeClass('text-success');
+					$p.text(message);
+					$p.addClass(isPositive ? 'text-success' : 'text-warning');
+				}
+				var $username = $('#username');
+				var $password = $('#password');
+				var $confirmPassword = $('#confirm-password');
+				var $submitButton = $('form input[type="submit"]');
+				var minPasswordLength = 10;
+
+				function validateUsername() {
+					var trimmedUsername = $username.val().trim();
+					if (trimmedUsername.length == 0) {
+						setMessageFor($username, 'Je moet een gebruikersnaam kiezen', false);
+					}
+					else if (trimmedUsername === 'jeroen') {
+						setMessageFor($username, 'Deze gebruikersnaam is al in gebruik', false);
+					}
+					else {
+						setMessageFor($username, 'Hey, dat is een leuke naam!', true);
+					}
+				}
+
+				function validatePassword() {
+					var password = $password.val();
+					var password2 = $confirmPassword.val();
+					if (!/[a-z]/.test(password)
+					||  !/[A-Z]/.test(password)
+					||  !/[0-9]/.test(password)) {
+						setMessageFor($password, 'Je wachtwoord moet minimaal één kleine letter, één hoofdletter en één cijfer bevatten', false);
+					}
+					else if (password.length < minPasswordLength) {
+						setMessageFor($password, 'Je wachtwoord moet minimaal tien tekens bevatten', false);
+					}
+					else {
+						setMessageFor($password, 'Wat een goed wachtwoord!', true);
+					}
+
+					if (password2.length === 0) {
+						setMessageFor($confirmPassword, 'Vergeet je wachtwoord niet te bevestigen', false);
+					}
+					else if (password !== password2) {
+						setMessageFor($confirmPassword, 'Je wachtwoorden komen niet overeen', false);
+					}
+					else {
+						setMessageFor($confirmPassword, 'Prima! Je hebt je wachtwoord onthouden', true);
+					}
+				}
+
+
+				function validateForm() {
+					validateUsername();
+					validatePassword();
+
+					if ($('form .text-warning').length > 0) {
+						$submitButton.attr('disabled', true);
+					} 
+					else {
+						$submitButton.removeAttr('disabled');
+					}
+
+				}
+
+				$username.keyup(validateForm);
+				$password.keyup(validateForm);
+				$confirmPassword.keyup(validateForm);
+				validateForm();
+
+			});
+		</script>
+	</body>
+
+</html>
