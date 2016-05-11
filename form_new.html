@@ -8,14 +8,14 @@
 	<body>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h1 class="panel-title">Registreer je op onze site</h1>
+				<h1 class="panel-title">Registreer je bij Tjilp</h1>
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal">
 					<div class="form-group">
 						<label for="username" class="col-xs-4 control-label">Gebruikersnaam</label>
 						<div class="col-xs-8">
-							<input type="email" class="form-control" id="username" placeholder="Jan">
+							<input type="text" class="form-control" id="username" placeholder="Jan">
 							<p class="feedback"></p>
 						</div>
 					</div>
@@ -60,11 +60,17 @@
 
 				function validateUsername() {
 					var trimmedUsername = $username.val().trim();
+                    var takenUsernames = [ 
+                        'jeroen',
+                        'aap',
+                        'noot',
+                        'mies'
+                    ];
 					if (trimmedUsername.length == 0) {
-						setMessageFor($username, 'Je moet een gebruikersnaam kiezen', false);
+						setMessageFor($username, 'Je moet een gebruikersnaam kiezen.', false);
 					}
-					else if (trimmedUsername === 'jeroen') {
-						setMessageFor($username, 'Deze gebruikersnaam is al in gebruik', false);
+					else if (takenUsernames.indexOf(trimmedUsername) !== -1) {
+						setMessageFor($username, 'Deze gebruikersnaam is al in gebruik.', false);
 					}
 					else {
 						setMessageFor($username, 'Hey, dat is een leuke naam!', true);
@@ -77,23 +83,23 @@
 					if (!/[a-z]/.test(password)
 					||  !/[A-Z]/.test(password)
 					||  !/[0-9]/.test(password)) {
-						setMessageFor($password, 'Je wachtwoord moet minimaal één kleine letter, één hoofdletter en één cijfer bevatten', false);
+						setMessageFor($password, 'Je wachtwoord moet minimaal één kleine letter, één hoofdletter en één cijfer bevatten.', false);
 					}
 					else if (password.length < minPasswordLength) {
-						setMessageFor($password, 'Je wachtwoord moet minimaal tien tekens bevatten', false);
+						setMessageFor($password, 'Je wachtwoord moet minimaal tien tekens bevatten.', false);
 					}
 					else {
 						setMessageFor($password, 'Wat een goed wachtwoord!', true);
 					}
 
 					if (password2.length === 0) {
-						setMessageFor($confirmPassword, 'Vergeet je wachtwoord niet te bevestigen', false);
+						setMessageFor($confirmPassword, 'Vergeet je wachtwoord niet te bevestigen.', false);
 					}
 					else if (password !== password2) {
-						setMessageFor($confirmPassword, 'Je wachtwoorden komen niet overeen', false);
+						setMessageFor($confirmPassword, 'Je wachtwoorden komen niet overeen.', false);
 					}
 					else {
-						setMessageFor($confirmPassword, 'Prima! Je hebt je wachtwoord onthouden', true);
+						setMessageFor($confirmPassword, 'Prima! Je hebt je wachtwoord onthouden.', true);
 					}
 				}
 
